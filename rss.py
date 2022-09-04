@@ -4,7 +4,7 @@ import feedparser
 from sql import db
 from time import sleep, time
 from dotenv import load_dotenv
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -40,10 +40,19 @@ def create_feed_checker(feed_url):
         FEED = feedparser.parse(feed_url)
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
+            if "CHRE" in entry.title:
+                title = entry.title
+                view_link = entry.id
+                tr_dl_link = entry.link
+                tr_size = entry.nyaa_size
+                info_hash = entry.nyaa_infohash
+                magnet = f"https://nyaasi.herokuapp.com/nyaamagnet/urn:btih:{info_hash}"
                        # ↓ Edit this message as your needs.
-            message = f"**{entry.title}**\n```{entry.link}```"
+                # message = f"**{entry.title}**\n```{entry.link}```"
+                message = f"**{title}**\n`{tr_size}`\n\n⌈ [👀]({view_link})| [🔍]({tr_dl_link}) | [🔗]({magnet})⌋"
+                # chat_id = message.chat.id
             try:
-                app.send_message(log_channel, message)
+                app.send_message(log_channel, message,parse_mode=enums.ParseMode.MARKDOWN)
                 db.update_link(feed_url, entry.id)
             except FloodWait as e:
                 print(f"FloodWait: {e.x} seconds")
