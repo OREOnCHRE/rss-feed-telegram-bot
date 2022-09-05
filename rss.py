@@ -52,7 +52,7 @@ def create_feed_checker(feed_url):
                 message = f"**{title}**\n`{tr_size}`\n\n⌈ [👀]({view_link})| [🔍]({tr_dl_link}) | [🔗]({magnet})⌋"
                 # chat_id = message.chat.id
             try:
-                app.send_message(log_channel, message,parse_mode= "MarkdownV2")
+                app.send_message(log_channel, message,parse_mode= "markdown")
                 db.update_link(feed_url, entry.id)
             except FloodWait as e:
                 print(f"FloodWait: {e.x} seconds")
