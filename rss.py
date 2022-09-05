@@ -2,7 +2,7 @@ import os
 import sys
 import feedparser
 from sql import db
-from time import sleep, time
+from time import sleep, time, MarkdownV2
 from dotenv import load_dotenv
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
