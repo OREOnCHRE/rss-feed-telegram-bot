@@ -4,7 +4,7 @@ import feedparser
 from sql import db
 from time import sleep, time
 from dotenv import load_dotenv
-from pyrogram import Client, filters, enums
+from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -19,8 +19,8 @@ try:
     feed_urls = list(set(i for i in os.environ.get("FEED_URLS").split("|")))  # RSS Feed URL of the site.
     bot_token = os.environ.get("BOT_TOKEN")   # Get it by creating a bot on https://t.me/botfather
     log_channel = int(os.environ.get("LOG_CHANNEL"))   # Telegram Channel ID where the bot is added and have write permission. You can use group ID too.
-    check_interval = int(os.environ.get("INTERVAL", 10))   # Check Interval in seconds.  
-    max_instances = int(os.environ.get("MAX_INSTANCES", 3))   # Max parallel instance to be used.
+    check_interval = int(os.environ.get("INTERVAL", 5))   # Check Interval in seconds.  
+    max_instances = int(os.environ.get("MAX_INSTANCES", 5))   # Max parallel instance to be used.
 except Exception as e:
     print(e)
     print("One or more variables missing. Exiting !")
@@ -40,7 +40,7 @@ def create_feed_checker(feed_url):
         FEED = feedparser.parse(feed_url)
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
-            if "Yugen" in entry.title:
+            if "CHRE" in entry.title:
                 title = entry.title
                 view_link = entry.id
                 tr_dl_link = entry.link
