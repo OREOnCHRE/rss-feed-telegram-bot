@@ -40,7 +40,6 @@ def create_feed_checker(feed_url):
         FEED = feedparser.parse(feed_url)
         entry = FEED.entries[0]
         if entry.id != db.get_link(feed_url).link:
-            global title
             if "CHRE" in entry.title:
                 title = entry.title
                 view_link = entry.id
@@ -49,18 +48,17 @@ def create_feed_checker(feed_url):
                 info_hash = entry.nyaa_infohash
                 magnet = f"https://nyaasi.herokuapp.com/nyaamagnet/urn:btih:{info_hash}"
                        # ↓ Edit this message as your needs.
-                # message = f"**{entry.title}**\n```{entry.link}```"
-                message = test112212     
+                # message = f"**{entry.title}**\n```{entry.link}```"     
                 message = f"**{title}**\n`{tr_size}`\n\n⌈ [👀]({view_link})| [🔍]({tr_dl_link}) | [🔗]({magnet})⌋"
                 # chat_id = message.chat.id
-            try:
-                app.send_message(log_channel, message, parse_mode= "markdown", disable_web_page_preview=True)
-                db.update_link(feed_url, entry.id)
-            except FloodWait as e:
-                print(f"FloodWait: {e.x} seconds")
-                sleep(e.x)
-            except Exception as e:
-                print(e)
+                try:
+                    app.send_message(log_channel, message, parse_mode= "markdown", disable_web_page_preview=True)
+                    db.update_link(feed_url, entry.id)
+                except FloodWait as e:
+                    print(f"FloodWait: {e.x} seconds")
+                    sleep(e.x)
+                except Exception as e:
+                    print(e)
         else:
             print(f"Checked RSS FEED: {entry.id}")
     return check_feed
