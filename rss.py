@@ -50,7 +50,7 @@ def create_feed_checker(feed_url):
                 magnet = f"https://nyaasi.herokuapp.com/nyaamagnet/urn:btih:{info_hash}"
                        # ↓ Edit this message as your needs.
                 # message = f"**{entry.title}**\n```{entry.link}```"
-                message = "Test12345"           
+                global message         
                 message = f"**{title}**\n`{tr_size}`\n\n⌈ [👀]({view_link})| [🔍]({tr_dl_link}) | [🔗]({magnet})⌋"
                 # chat_id = message.chat.id
             try:
