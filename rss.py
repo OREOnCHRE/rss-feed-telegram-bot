@@ -34,7 +34,7 @@ for feed_url in feed_urls:
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
-global message  
+
 def create_feed_checker(feed_url):
     def check_feed():
         FEED = feedparser.parse(feed_url)
@@ -50,6 +50,7 @@ def create_feed_checker(feed_url):
                 magnet = f"https://nyaasi.herokuapp.com/nyaamagnet/urn:btih:{info_hash}"
                        # ↓ Edit this message as your needs.
                 # message = f"**{entry.title}**\n```{entry.link}```"
+                message = test112212     
                 message = f"**{title}**\n`{tr_size}`\n\n⌈ [👀]({view_link})| [🔍]({tr_dl_link}) | [🔗]({magnet})⌋"
                 # chat_id = message.chat.id
             try:
