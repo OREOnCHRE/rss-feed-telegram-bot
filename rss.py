@@ -34,7 +34,7 @@ for feed_url in feed_urls:
 
 app = Client(":memory:", api_id=api_id, api_hash=api_hash, bot_token=bot_token)
 
-
+global message  
 def create_feed_checker(feed_url):
     def check_feed():
         FEED = feedparser.parse(feed_url)
